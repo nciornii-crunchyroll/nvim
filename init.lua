@@ -22,7 +22,7 @@ require('packer').startup(function()
 	-- UI to select things (files, grep results, open buffers...)
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-	use 'blueshirts/darcula' -- colorscheme
+	use 'rakshazi/darcula' -- colorscheme
 	use 'itchyny/lightline.vim' -- Fancier statusline
 	use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' } -- nerdtree-like
 	use { 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- buffer line
@@ -77,13 +77,8 @@ vim.o.foldmethod = 'syntax'
 vim.o.foldnestmax = 1
 
 -- Set colorscheme (order is important here)
-vim.o.termguicolors = true
+vim.o.termguicolors = false
 vim.cmd [[colorscheme darcula]]
-
--- Remove trailing whitespaces
-vim.api.nvim_exec([[
-autocmd BufWritePre * :%s/\s\+$//e
-]], false)
 
 -- Set bufferbar
 require("bufferline").setup{
@@ -101,9 +96,6 @@ vim.api.nvim_set_keymap('n', '<A-w>', ':w|bd<CR>', { noremap = true, silent = tr
 vim.api.nvim_set_keymap('n', '<A-n>', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-p>', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
 
--- Alt+S
-vim.api.nvim_set_keymap('n', '<A-s>', ':w<CR>', { noremap = true, silent = true })
-
 -- Set statusbar
 vim.g.lightline = {
 	active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
@@ -119,16 +111,21 @@ vim.g.maplocalleader = ' '
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
+-- Alt+S
+vim.api.nvim_set_keymap('n', '<A-s>', ':w<CR>', { noremap = true, silent = true })
+
 -- Highlight on yank
-vim.api.nvim_exec(
-	[[
+vim.api.nvim_exec([[
 augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
-]],
-	false
-	)
+]], false)
+
+-- Remove trailing whitespaces
+vim.api.nvim_exec([[
+autocmd BufWritePre * :%s/\s\+$//e
+]], false)
 
 -- Y yank until the end of line  (note: this is now a default on master)
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
