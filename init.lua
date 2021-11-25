@@ -23,6 +23,7 @@ require('packer').startup(function()
 	use 'fatih/vim-go' -- Golang
 
 	-- features
+	use 'axelf4/vim-strip-trailing-whitespace' -- remove trailing whitespaces on changed lines only
 	use 'sheerun/vim-polyglot' -- identation
 	use 'b3nj5m1n/kommentary' -- comments
 	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
@@ -128,11 +129,6 @@ augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
-]], false)
-
--- Remove trailing whitespaces
-vim.api.nvim_exec([[
-autocmd BufWritePre * :%s/\s\+$//e
 ]], false)
 
 -- Y yank until the end of line  (note: this is now a default on master)
