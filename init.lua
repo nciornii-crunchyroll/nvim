@@ -137,14 +137,14 @@ vim.g.indent_blankline_show_trailing_blankline_indent = false
 
 -- nerdtree-like
 vim.api.nvim_set_keymap('', '<A-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_special_files = {}
 
 require('nvim-tree').setup {
-	auto_close = true,
-	auto_resize = true,
 	hijack_cursor = true,
 	open_on_setup = true,
+	renderer = {
+		highlight_git = true,
+		special_files = {}
+	},
 	actions = {
 		open_file = {
 			quit_on_open = true,
