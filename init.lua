@@ -50,6 +50,10 @@ end)
 -- Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
 
+-- Spellcheck
+vim.o.spell = true
+vim.o.spelllang = 'en_us'
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
