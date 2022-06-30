@@ -24,7 +24,7 @@ require('packer').startup(function()
 
 	-- features
 	use 'axelf4/vim-strip-trailing-whitespace' -- remove trailing whitespaces on changed lines only
-	use 'sheerun/vim-polyglot' -- identation
+	use 'sheerun/vim-polyglot' -- indentation
 	use 'b3nj5m1n/kommentary' -- comments
 	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
 	use 'hrsh7th/cmp-nvim-lsp' -- cmp source: nvim lsp
@@ -35,12 +35,13 @@ require('packer').startup(function()
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
 	-- UI
-	use 'rakshazi/darcula' -- colorscheme
+	use 'folke/tokyonight.nvim' -- colorscheme
 	use { 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- bufferline
 	use { 'hoob3rt/lualine.nvim', requires = 'kyazdani42/nvim-web-devicons' } -- statusline
 	use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' } -- nerdtree-like
 	use 'folke/lsp-colors.nvim' -- colorscheme fix for not (yet) supported LSP colors
 	use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- git diff for lines
+	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 	use 'lukas-reineke/indent-blankline.nvim' -- indentation guides even on blank lines
 	use 'kevinhwang91/nvim-bqf' -- quickfix windows enhancer
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- UI to select things
@@ -83,7 +84,8 @@ vim.o.foldnestmax = 1
 
 -- Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.cmd [[colorscheme darcula]]
+vim.g.tokyonight_style = "night"
+vim.cmd [[colorscheme tokyonight]]
 
 -- Set bufferline
 require("bufferline").setup{
@@ -103,7 +105,7 @@ vim.api.nvim_set_keymap('n', '<A-p>', ':BufferLineCyclePrev<CR>', { noremap = tr
 
 -- Set statusbar
 require('lualine').setup{
-	options = { theme = 'codedark' },
+	options = { theme = 'tokyonight' },
 	extensions = { 'nvim-tree' },
 }
 
@@ -211,6 +213,22 @@ require('gitsigns').setup {
 		changedelete = { hl = 'GitGutterChange', text = '~' },
 	},
 }
+
+-- DiffView
+local actions = require("diffview.actions")
+require("diffview").setup({
+		keymaps = {
+			view = {
+				["e"] = actions.toggle_files,
+			},
+			file_panel = {
+				["e"] = actions.toggle_files,
+			},
+			file_history_panel = {
+				["e"] = actions.toggle_files,
+			},
+		}
+	})
 
 -- Telescope
 require('telescope').setup {
