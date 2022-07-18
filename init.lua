@@ -84,7 +84,6 @@ vim.o.foldnestmax = 1
 
 -- Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.g.tokyonight_style = "night"
 vim.cmd [[colorscheme tokyonight]]
 
 -- Set bufferline
