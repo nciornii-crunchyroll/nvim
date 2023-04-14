@@ -41,7 +41,6 @@ require('packer').startup(function()
 	use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' } -- nerdtree-like
 	use 'folke/lsp-colors.nvim' -- colorscheme fix for not (yet) supported LSP colors
 	use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- git diff for lines
-	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 	use 'lukas-reineke/indent-blankline.nvim' -- indentation guides even on blank lines
 	use 'kevinhwang91/nvim-bqf' -- quickfix windows enhancer
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- UI to select things
@@ -73,6 +72,8 @@ vim.opt.undofile = true
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
+vim.o.mouse = ''
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -145,7 +146,6 @@ vim.api.nvim_set_keymap('', '<A-e>', ':NvimTreeToggle<CR>', { noremap = true, si
 
 require('nvim-tree').setup {
 	hijack_cursor = true,
-	open_on_setup = true,
 	renderer = {
 		highlight_git = true,
 		special_files = {}
@@ -212,22 +212,6 @@ require('gitsigns').setup {
 		changedelete = { hl = 'GitGutterChange', text = '~' },
 	},
 }
-
--- DiffView
-local actions = require("diffview.actions")
-require("diffview").setup({
-		keymaps = {
-			view = {
-				["e"] = actions.toggle_files,
-			},
-			file_panel = {
-				["e"] = actions.toggle_files,
-			},
-			file_history_panel = {
-				["e"] = actions.toggle_files,
-			},
-		}
-	})
 
 -- Telescope
 require('telescope').setup {
